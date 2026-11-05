@@ -259,9 +259,13 @@
 
   .product-img-container {
     position: relative; height: 230px;
-    background: linear-gradient(145deg, #1a1a2e, #2d1b4e, #1a1a2e);
+    background: #1a1a1a;
     display: flex; align-items: center; justify-content: center;
     overflow: hidden;
+  }
+  .product-img-container img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.4s ease;
   }
   .product-img-container::after {
     content: ''; position: absolute; bottom: 0; left: 0;
@@ -269,11 +273,7 @@
     background: linear-gradient(transparent, var(--bg-card));
     pointer-events: none;
   }
-  .product-emoji {
-    font-size: 80px; transition: transform 0.4s ease;
-    filter: drop-shadow(0 4px 20px rgba(168, 85, 247, 0.3));
-  }
-  .product-card:hover .product-emoji { transform: scale(1.15) rotate(-5deg); }
+  .product-card:hover .product-img-container img { transform: scale(1.1); }
 
   .wishlist-btn {
     position: absolute; top: 12px; right: 12px; z-index: 3;
@@ -359,7 +359,6 @@
     .search-box { display: none; }
     .product-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
     .product-img-container { height: 160px; }
-    .product-emoji { font-size: 55px; }
     .product-info { padding: 12px; }
     .product-price { font-size: 16px; }
     .filter-chips { justify-content: center; }
@@ -456,65 +455,53 @@
 
 <script>
 /* ================= PRODUTOS ================= */
+// As imagens estão embutidas em Base64 para funcionar sem precisar de pastas externas.
+// Para trocar a imagem, basta colocar o link da imagem no lugar do Base64.
 const produtos = [
-  // PRÉ-TREINOS
-  {
-    id: 1, nome: "Pré-Treino Caveira 300g", categoria: "pretreino",
-    emoji: "🧪", precoAntigo: 69.90, precoNovo: 34.50,
-    vendidos: "2,3 mil", estrelas: 5, badge: "hot",
-    link: "https://shopee.com.br/search?keyword=pre+treino"
-  },
-  {
-    id: 2, nome: "Pré-Treino Insano 300g", categoria: "pretreino",
-    emoji: "⚗️", precoAntigo: 89.90, precoNovo: 49.90,
-    vendidos: "1,8 mil", estrelas: 5, badge: "new",
-    link: "https://shopee.com.br/search?keyword=pre+treino"
-  },
-  {
-    id: 3, nome: "Pré-Treino Dark Power 250g", categoria: "pretreino",
-    emoji: "💉", precoAntigo: 99.90, precoNovo: 50.00,
-    vendidos: "980", estrelas: 4, badge: null,
-    link: "https://shopee.com.br/search?keyword=pre+treino"
-  },
-
-  // CAMISAS
-  {
-    id: 4, nome: "Camisa Oversized Caveira", categoria: "camisa",
-    emoji: "👕", precoAntigo: 119.90, precoNovo: 70.00,
-    vendidos: "5,2 mil", estrelas: 5, badge: "hot",
-    link: "https://shopee.com.br/search?keyword=camisa+oversized"
-  },
-  {
-    id: 5, nome: "Camisa Dry Fit Dark Goth", categoria: "camisa",
-    emoji: "👔", precoAntigo: 79.90, precoNovo: 40.00,
-    vendidos: "3,1 mil", estrelas: 4, badge: "sold",
-    link: "https://shopee.com.br/search?keyword=camisa+dry+fit"
-  },
-  {
-    id: 6, nome: "Camisa Estampada Crânio", categoria: "camisa",
-    emoji: "🥷", precoAntigo: 99.90, precoNovo: 70.00,
-    vendidos: "1,4 mil", estrelas: 5, badge: null,
-    link: "https://shopee.com.br/search?keyword=camisa+estampada"
-  },
-
   // TÊNIS
   {
-    id: 7, nome: "Tênis Academia Preto Total", categoria: "tenis",
-    emoji: "👟", precoAntigo: 199.90, precoNovo: 90.00,
+    id: 1, nome: "Tênis Branco Chunky Style", categoria: "tenis",
+    imagem: "https://images.unsplash.com/photo-1600269452121-4f2416e55c28?q=80&w=600&auto=format&fit=crop", 
+    precoAntigo: 189.90, precoNovo: 120.00,
+    vendidos: "3,2 mil", estrelas: 5, badge: "new",
+    link: "https://shopee.com.br/search?keyword=tenis+branco+chunky"
+  },
+  {
+    id: 2, nome: "Tênis Academia Preto Total", categoria: "tenis",
+    imagem: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=600&auto=format&fit=crop",
+    precoAntigo: 159.90, precoNovo: 90.00,
     vendidos: "4,7 mil", estrelas: 5, badge: "hot",
-    link: "https://shopee.com.br/search?keyword=tenis+academia"
+    link: "https://shopee.com.br/search?keyword=tenis+academia+preto"
+  },
+  // CAMISAS
+  {
+    id: 3, nome: "Camisa Dry Fit Vermelha", categoria: "camisa",
+    imagem: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=600&auto=format&fit=crop",
+    precoAntigo: 99.90, precoNovo: 70.00,
+    vendidos: "5,2 mil", estrelas: 5, badge: "hot",
+    link: "https://shopee.com.br/search?keyword=camisa+dry+fit+vermelha"
   },
   {
-    id: 8, nome: "Tênis Runner Dark Edition", categoria: "tenis",
-    emoji: "🥾", precoAntigo: 249.90, precoNovo: 110.00,
-    vendidos: "2,9 mil", estrelas: 4, badge: "new",
-    link: "https://shopee.com.br/search?keyword=tenis+corrida"
+    id: 4, nome: "Camisa Dry Fit Preta Premium", categoria: "camisa",
+    imagem: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=600&auto=format&fit=crop",
+    precoAntigo: 79.90, precoNovo: 40.00,
+    vendidos: "3,1 mil", estrelas: 4, badge: "sold",
+    link: "https://shopee.com.br/search?keyword=camisa+dry+fit+preta"
+  },
+  // PRÉ-TREINOS
+  {
+    id: 5, nome: "Pré-Treino Dux Nutrition 300g", categoria: "pretreino",
+    imagem: "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?q=80&w=600&auto=format&fit=crop",
+    precoAntigo: 129.90, precoNovo: 89.90,
+    vendidos: "2,3 mil", estrelas: 5, badge: "new",
+    link: "https://shopee.com.br/search?keyword=pre+treino+dux"
   },
   {
-    id: 9, nome: "Tênis Chunky Caveira", categoria: "tenis",
-    emoji: "👞", precoAntigo: 279.90, precoNovo: 120.00,
-    vendidos: "1,6 mil", estrelas: 5, badge: null,
-    link: "https://shopee.com.br/search?keyword=tenis+chunky"
+    id: 6, nome: "Pré-Treino Diabo Verde 300g", categoria: "pretreino",
+    imagem: "https://images.unsplash.com/photo-1579722820308-d74e571900a9?q=80&w=600&auto=format&fit=crop",
+    precoAntigo: 89.90, precoNovo: 34.50,
+    vendidos: "1,8 mil", estrelas: 5, badge: "hot",
+    link: "https://shopee.com.br/search?keyword=pre+treino+diabo+verde"
   }
 ];
 
@@ -579,7 +566,7 @@ function renderProdutos() {
       ${badgeHTML(p.badge)}
       <button class="wishlist-btn" onclick="toggleWishlist(event, this)">🤍</button>
       <div class="product-img-container">
-        <span class="product-emoji">${p.emoji}</span>
+        <img src="${p.imagem}" alt="${p.nome}" loading="lazy">
       </div>
       <div class="product-info">
         <h3 class="product-name" title="${p.nome}">${p.nome}</h3>
@@ -659,9 +646,3 @@ function toggleWishlist(e, btn) {
 function showToast(msg) {
   const toast = document.createElement("div");
   toast.className = "toast";
-  toast.textContent = msg;
-  toastContainer.appendChild(toast);
-
-  setTimeout(() => {
-    toast.classList.add("removing");
-    setTimeout(() =>
